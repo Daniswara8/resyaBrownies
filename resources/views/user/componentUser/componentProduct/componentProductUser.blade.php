@@ -20,12 +20,11 @@
     }
 
     .menu .button-category a:active {
-        background-color: rgb(161, 86, 32);
         color: white;
     }
 
     .menu .button-category a.active {
-        background-color: rgb(137, 63, 10);
+        background-color: rgb(109, 55, 17);
         color: white;
         border-radius: 40px;
         width: 200px;
@@ -33,7 +32,7 @@
     }
 
     .menu .button-category a:hover {
-        background-color: rgb(137, 63, 10);
+        background-color: rgb(109, 55, 17);
         transition: all 0.2s;
     }
 
@@ -178,7 +177,8 @@
 
         <div class="card-wrapper">
             <div class="row justify-content-center row-gap-5 mt-5">
-                <div class="col-md-6 col-lg-4">
+
+                <div class="col-md-6 col-lg-4 snackCemilan">
                     <div class="card">
                         <img src="{{ asset('images/brownies.jpg') }}" class="card-img-top">
                         <div class="card-body py-4">
@@ -193,7 +193,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
+                <div class="col-md-6 col-lg-4 snackCemilan">
                     <div class="card">
                         <img src="{{ asset('images/boluGulung.jpg') }}" class="card-img-top">
                         <div class="card-body py-4">
@@ -208,7 +208,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
+                <div class="col-md-6 col-lg-4 snackCemilan">
                     <div class="card">
                         <img src="{{ asset('images/serabiTampah.jpg') }}" class="card-img-top">
                         <div class="card-body py-4">
@@ -223,31 +223,46 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
+                <div class="col-md-6 col-lg-4 nasiLauk">
                     <div class="card">
-                        <img src="{{ asset('images/boluPelangi.jpg') }}" class="card-img-top">
+                        <img src="{{ asset('images/nasiTumpeng.jpg') }}" class="card-img-top">
                         <div class="card-body py-4">
                             <h5 class="fs-4"> <span class="merk-depan">Resya</span> <span
                                     class="merk-belakang">Brownies</span> </h5>
                             <hr class="w-75">
-                            <h5 class="card-title fs-4">Serabi Tampah</h5>
+                            <h5 class="card-title fs-4">Nasi Tumpeng</h5>
                             <hr class="w-75">
-                            <h5 class="card-title fs-4">Rp. 200.000 / BOX</h5>
+                            <h5 class="card-title fs-4">Rp. 300.000 / BOX</h5>
                             <hr class="w-75">
                             <a href="#" class="btn border border-0">TAMBAH KE KERANJANG</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
+                <div class="col-md-6 col-lg-4 nasiLauk">
                     <div class="card">
-                        <img src="{{ asset('images/cheesestick.jpg') }}" class="card-img-top">
+                        <img src="{{ asset('images/ayamBakar.jpg') }}" class="card-img-top">
                         <div class="card-body py-4">
                             <h5 class="fs-4"> <span class="merk-depan">Resya</span> <span
                                     class="merk-belakang">Brownies</span> </h5>
                             <hr class="w-75">
-                            <h5 class="card-title fs-4">Serabi Tampah</h5>
+                            <h5 class="card-title fs-4">Ayam Bakar</h5>
                             <hr class="w-75">
-                            <h5 class="card-title fs-4">Rp. 200.000 / BOX</h5>
+                            <h5 class="card-title fs-4">Rp. 120.000 / BOX</h5>
+                            <hr class="w-75">
+                            <a href="#" class="btn border border-0">TAMBAH KE KERANJANG</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 nasiLauk">
+                    <div class="card">
+                        <img src="{{ asset('images/keringTempe.jpg') }}" class="card-img-top">
+                        <div class="card-body py-4">
+                            <h5 class="fs-4"> <span class="merk-depan">Resya</span> <span
+                                    class="merk-belakang">Brownies</span> </h5>
+                            <hr class="w-75">
+                            <h5 class="card-title fs-4">Kering Tempe</h5>
+                            <hr class="w-75">
+                            <h5 class="card-title fs-4">Rp. 80.000 / BOX</h5>
                             <hr class="w-75">
                             <a href="#" class="btn border border-0">TAMBAH KE KERANJANG</a>
                         </div>
@@ -260,3 +275,38 @@
     </div>
 
 </section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const snackBtn = document.querySelector(".btn-snack");
+        const nasiBtn = document.querySelector(".btn-nasi");
+        const allItems = document.querySelectorAll(".card-wrapper .col-md-6");
+
+        snackBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            setActiveButton(snackBtn);
+            filterItems("snackCemilan");
+        });
+
+        nasiBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            setActiveButton(nasiBtn);
+            filterItems("nasiLauk");
+        });
+
+        function filterItems(category) {
+            allItems.forEach(item => {
+                if (item.classList.contains(category)) {
+                    item.style.display = "block";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        }
+
+        function setActiveButton(activeBtn) {
+            [snackBtn, nasiBtn].forEach(btn => btn.classList.remove("active"));
+            activeBtn.classList.add("active");
+        }
+    });
+</script>

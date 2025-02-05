@@ -26,19 +26,19 @@
     @include('user.componentUser.componentPartials.navbarUser')
 
     {{-- Component Banner --}}
-    @include('user.componentUser.componentHomepage.bannerUser')
+    @include('user.componentUser.componentHomepage.componentBannerUser')
 
     {{-- Component About us --}}
-    @include('user.componentUser.componentHomepage.about')
+    @include('user.componentUser.componentHomepage.componentAboutUser')
 
     {{-- Component Menu --}}
-    @include('user.componentUser.componentHomepage.menuUser')
+    @include('user.componentUser.componentHomepage.componentMenuUser')
 
     {{-- Component Testimoni --}}
-    @include('user.componentUser.componentHomepage.faqUser')
+    @include('user.componentUser.componentHomepage.componentFaqUser')
 
     {{-- Component Contact --}}
-    @include('user.componentUser.componentHomepage.contactUser')
+    @include('user.componentUser.componentHomepage.componentContactUser')
 
     {{-- Component Footer --}}
     @include('user.componentUser.componentPartials.footerUser')

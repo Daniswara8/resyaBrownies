@@ -68,9 +68,9 @@
     }
 
     .menu .btn.other:hover {
-        background-color: rgb(160, 91, 42) !important;
+        background-color: rgb(126, 65, 21) !important;
         transition: all 0.2s;
-        border: 3px solid rgb(160, 91, 42) !important;
+        border: 3px solid rgb(126, 65, 21) !important;
     }
 
     @media (max-width: 850px) {
