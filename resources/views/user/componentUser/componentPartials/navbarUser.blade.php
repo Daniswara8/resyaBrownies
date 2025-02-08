@@ -50,6 +50,21 @@
         font-size: 1.375rem;
     }
 
+    /* Pengkondisian ketika button login muncul */
+    .navbar .right a.btn-login {
+        background-color: rgb(198, 95, 21);
+        font-size: 1rem;
+        transition: background-color 0.4s;
+        border-radius: 40px;
+        padding: 13px 22px;
+    }
+
+    .navbar .right a.btn-login:hover {
+        background-color: rgb(148, 62, 1) !important;
+        color: white !important;
+        font-size: 1rem;
+    }
+
     .navbar .bi-list {
         color: whitesmoke;
         font-size: 2rem;
@@ -150,6 +165,9 @@
                 <li class="nav-item">
                     <a href="" class="nav-link"><i class="bi bi-person-circle"></i></a>
                 </li>
+                {{-- <li class="nav-item">
+                    <a href="{{ route('login') }}" class="nav-link btn btn-login">Login Sekarang</a>
+                </li> --}}
             </ul>
 
         </div>
@@ -157,16 +175,6 @@
 </nav>
 
 <script>
-    // memunculkan background - color saat di scroll
-    // const navEl = document.querySelector('.navbar');
-    // window.addEventListener('scroll', () => {
-    //     if (window.scrollY > 56) {
-    //         navEl.classList.add('navbar-scrolled');
-    //     } else {
-    //         navEl.classList.remove('navbar-scrolled');
-    //     }
-    // });
-
     // interactive button hamburger icon dan x icon di navbar 
     document.addEventListener("DOMContentLoaded", function() {
         const navbarToggler = document.querySelector('.navbar-toggler');
