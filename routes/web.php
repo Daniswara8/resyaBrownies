@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('user.pagesIncluded.homepage.homepageUser');
+    return view('user.homePage.home');
 })->name('home');
 
 
 Route::get('/product', function () {
-    return view('user.pagesIncluded.productPage.productPageUser');
+    return view('user.productPage.productUser');
 })->name('product');
 
 
 route::get('/cart', function () {
-    return view('user.pagesIncluded.cartPage.cartPageUser');
+    return view('user.cartPage.cartUser');
 })->name('cart');
 
 
@@ -29,10 +29,18 @@ route::get('/testimoni', function () {
 
 
 route::get('/register', function () {
-    return view('user.logRes.register');
+    return view('logRes.register');
 })->name('register');
 
 
 route::get('/login', function () {
-    return view('user.logRes.login');
+    return view('logRes.login');
 })->name('login');
+
+route::get('/admin/daftarUser', function () {
+    return view('admin.componentAdmin.componentDaftarProduct.daftarProductAdmin');
+});
+
+route::get('/admin/daftarProduct', function () {
+    return view('admin.componentAdmin.componentDaftarProduct.daftarProductAdmin');
+});
