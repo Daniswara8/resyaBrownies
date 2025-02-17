@@ -1,4 +1,11 @@
 @extends('user.layout.mainLayout.mainLayout')
+
+{{-- Title Dinamis --}}
+@section('title')
+    Homepage
+@endsection
+{{-- End Title --}}
+
 @section('content')
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playwrite+HU:wght@100..400&display=swap');
@@ -526,7 +533,7 @@
                         </h2>
                         <div id="flush-collapseThree" class="accordion-collapse collapse"
                             data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">Kontol Enak aja Lu</div>
+                            <div class="accordion-body">Pesanan hanya bisa Diambil di tempat penjual</div>
                         </div>
                     </div>
                     <div class="accordion-item">

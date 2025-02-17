@@ -9,10 +9,6 @@
         background-color: #4e3c3b;
     }
 
-    /* .navbar-scrolled {
-        background-color: #4e3c3b;
-    } */
-
     .navbar .navbar-brand {
         font-family: "Playwrite HU";
         color: whitesmoke;
@@ -37,6 +33,13 @@
         color: whitesmoke;
         font-size: 14px;
         margin: 20px;
+    }
+
+    .navbar-nav .nav-link.active {
+        font-size: 14px;
+        font-family: "Playwrite HU";
+        color: whitesmoke;
+        border-bottom: 3px solid white;
     }
 
     .navbar .right .nav-link {
@@ -151,23 +154,29 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto mid">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">HOME</a>
+                    <a class="nav-link {{ Request::routeIs('home') ? 'active' : '' }}"
+                        href="{{ route('home') }}">HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('product') }}">PRODUCT</a>
+                    <a class="nav-link {{ Request::routeIs('product') ? 'active' : '' }}"
+                        href="{{ route('product') }}">PRODUCT</a>
                 </li>
             </ul>
 
             <ul class="navbar-nav right">
-                <li class="nav-item">
-                    <a href="{{ route('cart') }}" class="nav-link"><i class="bi bi-cart-fill"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a href="" class="nav-link"><i class="bi bi-person-circle"></i></a>
-                </li>
-                {{-- <li class="nav-item">
-                    <a href="{{ route('login') }}" class="nav-link btn btn-login">Login Sekarang</a>
-                </li> --}}
+                @if (Auth::check())
+                    <li class="nav-item">
+                        <a href="{{ route('cart') }}" class="nav-link"><i class="bi bi-cart-fill"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('dashboardUser.index') }}" class="nav-link"><i
+                                class="bi bi-person-circle"></i></a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a href="{{ route('login.index') }}" class="nav-link btn btn-login">Login Sekarang</a>
+                    </li>
+                @endif
             </ul>
 
         </div>

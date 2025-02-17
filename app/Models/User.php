@@ -22,28 +22,11 @@ class User extends Authenticatable
         'no_telepon',
         'email',
         'password',
-        'konfirmasi_password',
-        'status_aktif',
-        'deleted_at'
+        'alamat',
+        'role'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+    protected $attributes = [
+        'role' => 'user'
     ];
 }

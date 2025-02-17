@@ -4,9 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        @yield('title')
-    </title>
+    <title>Dashboard User</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -31,39 +29,25 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('adminLte/plugins/summernote/summernote-bs4.min.css') }}">
 
-    {{-- Datatables Cdn Css --}}
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
-
-    {{-- Bootstrap Icons & override --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    {{-- Bootstrap Icons --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    {{-- Datatables Cdn --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 
     <style>
         .nav-item p.sidebar-link {
-            margin-left: 8px;
+            margin-left: 10px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
         }
 
-        .nav-item p.sidebar-link-daftar-user {
-            margin-left: 10px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        .nav-item p.sidebar-link.info-account {
+            margin-left: 12px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
         }
 
-        .form-control.form-control-sidebar::placeholder {
-            color: white !important;
-        }
-
-        .form-control.form-control-sidebar:focus::placeholder {
-            color: black !important;
-        }
-
-        button.btn.btn-sidebar:hover {
-            color: white;
-        }
-
-        .content-wrapper {
-            padding: 40px 0 50px;
+        body {
+            overflow-x: hidden !important;
         }
     </style>
 </head>
@@ -78,12 +62,18 @@
         </div> --}}
 
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light px-3">
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
                             class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="index3.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Contact</a>
                 </li>
             </ul>
 
@@ -118,11 +108,11 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <span class="brand-link">
-                <img src="{{ asset('imagesCompressed/logo69.png') }}" alt="Resya Brownies Logo"
+            <a href="index3.html" class="brand-link">
+                <img src="{{ asset('adminLte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-bold">Admin Brownies</span>
-            </span>
+                <span class="brand-text font-weight-light">AdminLTE 3</span>
+            </a>
 
             <!-- Sidebar -->
             <div class="sidebar">
@@ -144,79 +134,35 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-                            with font-awesome or any other icon font library -->
-
                         <li class="nav-item">
-                            <a class="nav-link {{ Request::routeIs('dashboardAdmin.listPenjualan') ? 'active' : '' }}"
-                                href="{{ route('dashboardAdmin.listPenjualan') }}">
-                                <i class="fas fa-money-bill">
-                                    <p class="sidebar-link">Laporan Penjualan</p>
-                                </i>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::routeIs('admin.listProduct') ? 'active' : '' }}"
-                                href="{{ route('admin.listProduct') }}">
-                                <i class="fas fa-solid fa-box">
-                                    <p class="sidebar-link">Daftar Product</p>
-                                </i>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::routeIs('dashboardAdmin.listUser') ? 'active' : '' }}"
-                                href="{{ route('dashboardAdmin.listUser') }}">
+                            <a class="nav-link {{ Request::routeIs('dashboardUser.index') ? 'active' : '' }}"
+                                href="{{ route('dashboardUser.index') }}">
                                 <i class="fas fa-user">
-                                    <p class="sidebar-link-daftar-user">Daftar User</p>
+                                    <p class="sidebar-link info-account">Informasi Akun</p>
                                 </i>
                             </a>
                         </li>
 
-                        <li class="nav-item menu-open">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-cart-plus"></i>
-                                <p class="sidebar-link">
-                                    Daftar Pesanan
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::routeIs('dashboardUser.pemesanan') ? 'active' : '' }}"
+                                href="{{ route('dashboardUser.pemesanan') }}">
+                                <i class="fas fa-clock">
+                                    <p class="sidebar-link">History Pemesanan</p>
+                                </i>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ asset('adminLte/index.html') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Menunggu Konfirmasi</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="./index2.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Sedang Dibuat</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="./index3.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Siap Diambil</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="./index3.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Sudah Diambil</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="./index3.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Dibatalkan</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('home') }}" class="nav-link">
+                                <i class="fas fa-arrow-left">
+                                    <p class="sidebar-link">Kembali Ke Home</p>
+                                </i>
+                            </a>
+                        </li>
+
                     </ul>
                 </nav>
+                
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->
@@ -227,18 +173,15 @@
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">
-                    <h1 class="text-center">
-                        @yield('titleHeader')
-                    </h1>
+                    {{-- <h1 class="text-center mt-5">Dashboard</h1> --}}
+                    @yield('pageTitle')
                 </div>
             </div>
             <!-- /.content-header -->
 
             <!-- Main content -->
             <section class="content">
-                <div class="container-fluid">
-                    @yield('content')
-                </div><!-- /.container-fluid -->
+                @yield('content')
             </section>
             <!-- /.content -->
         </div>
@@ -290,18 +233,21 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
-    {{-- Cdn Js SweetAlert --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    @yield('sweetAlert')
-
     {{-- Datatbles initialization --}}
     <script>
         $(document).ready(function() {
-            $('#myTable').DataTable();
+            $('#myTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json"
+                },
+                "paging": true,
+                "ordering": true,
+                "searching": true,
+                "pageLength": 5,
+                "responsive": true
+            });
         });
     </script>
-
 </body>
 
 </html>

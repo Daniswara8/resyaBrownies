@@ -1,4 +1,11 @@
 @extends('user.layout.mainLayout.mainLayout')
+
+{{-- Title Dinamis --}}
+@section('title')
+    Halaman Product
+@endsection
+{{-- End Title --}}
+
 @section('content')
     <style>
         body {

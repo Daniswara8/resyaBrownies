@@ -64,13 +64,12 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-lg-4 footer-about">
+            <div class="col-lg-4 footer-about my-auto">
                 <h4 class="text-white merk-depan fs-5 mt-2 mt-lg-0">Resya <span class="merk-belakang fs-5">Brownies</span>
                 </h4>
                 <p class="text-white mt-lg-3">Resya Brownies menyajikan Brownies yang enak, menyehatkan dan bikin
                     nagih
                 </p>
-                <p class="text-white">© 2024 Reserved by Daniswara Zavier Putra Akmal</p>
             </div>
 
             <div class="col-lg-4">
