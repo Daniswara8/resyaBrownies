@@ -1,32 +1,27 @@
-@extends('admin.layout.layoutAdminLte')
+@extends('admin.layout.layoutAdmin')
 
 @section('title')
     Daftar User
 @endsection
 
-@section('titleHeader')
-    Daftar User
-@endsection
-
 @section('content')
     <style>
-        .table-responsive {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            white-space: nowrap;
-        }
-
         .container-fluid {
             max-width: 100% !important;
             width: 95% !important
+        }
+
+        .container-fluid table.display {
+            background-color: white;
         }
     </style>
 
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <div class="table-responsive">
-                    <table id="myTable" class="display">
+                <h3 class="text-center fs-1">Daftar User</h3>
+                <div class="table-responsive mt-4">
+                    <table id="myTable" class="display table table-stripped table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>

@@ -1,4 +1,4 @@
-@extends('admin.layout.layoutAdminLte')
+@extends('admin.layout.layoutAdmin')
 
 @section('title')
     Laporan Penjualan

@@ -1,21 +1,11 @@
-@extends('admin.layout.layoutAdminLte')
+@extends('admin.layout.layoutAdmin')
 
 @section('title')
     Daftar Product
 @endsection
 
-@section('titleHeader')
-    Daftar Product
-@endsection
-
 @section('content')
     <style>
-        .table-responsive {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            white-space: nowrap;
-        }
-
         .container-fluid table i {
             border-radius: 9px;
         }
@@ -28,13 +18,19 @@
             text-decoration: none;
             background-color: rgb(43, 43, 227);
             color: white;
-            padding: 7px 20px;
+            padding: 15px 20px;
             border-radius: 10px;
+            font-size: 18px;
+            margin-left: 10px;
         }
 
         a.plus-product:hover {
             background-color: rgb(0, 0, 201);
             transition: background-color 0.3s;
+        }
+
+        .container-fluid table a {
+            color: black !important;
         }
 
         i.btn-edit {
@@ -51,18 +47,23 @@
             text-align: center;
             vertical-align: middle;
         }
+
+        .container-fluid table.display {
+            background-color: white;
+        }
     </style>
 
     <div class="container-fluid mt-3">
         <div class="row">
-            <div class="col-12">
+            <h3 class="text-center fs-1">Daftar Product</h3>
+            <div class="col-12 mt-3">
                 <div class="plus-button-wrapper text-center text-md-start">
                     <a href="{{ route('admin.productCreate.show') }}" class="plus-product">
                         <i class="bi bi-bag-plus-fill"></i>
                         Tambah Product
                     </a>
                 </div>
-                <div class="table-responsive mt-3">
+                <div class="table-responsive mt-5">
                     <table id="myTable" class="display table table-stripped table-bordered">
                         <thead>
                             <tr>
@@ -88,7 +89,7 @@
                                             class="object-fit-cover">
                                     </td>
                                     <td>
-                                        <div class="d-flex align-items-center justify-content-center column-gap-3">
+                                        <div class="d-flex align-items-center justify-content-center column-gap-2">
                                             <a href="{{ route('admin.productEdit.show', $product->id) }}">
                                                 <i class="bi bi-pencil-fill bg-warning btn-edit"></i>
                                             </a>
