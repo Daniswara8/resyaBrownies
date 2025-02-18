@@ -430,7 +430,30 @@
         <div class="container my-5">
 
             <div class="row justify-content-center gy-5">
-                <div class="col-md-6 col-lg-4">
+                @foreach ($productTerlaris as $product)
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card">
+                            <img src="{{ asset('storage/' . $product->foto_product) }}" class="card-img-top">
+                            <div class="card-body py-4">
+                                <h5 class="fs-4"> <span class="merk-depan">Resya</span> <span
+                                        class="merk-belakang">Brownies</span> </h5>
+                                <hr class="w-75">
+                                <h5 class="card-title fs-4">{{ $product->nama_product }}</h5>
+                                <hr class="w-75">
+                                <h5 class="card-title fs-4">Rp {{ number_format($product->harga_product, 0, ',', '.') }}
+                                    / BOX</h5>
+                                <hr class="w-75">
+                                <h5 class="card-title fs-4">Stok :
+                                    <span class="stok text-capitalize">{{ $product->stok }}</span>
+                                </h5>
+                                <hr class="w-75">
+                                <a href="#" class="btn border border-0">TAMBAH KE KERANJANG</a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+                {{-- <div class="col-md-6 col-lg-4">
                     <div class="card">
                         <img src="{{ asset('images/brownies.jpg') }}" class="card-img-top">
                         <div class="card-body py-4">
@@ -440,6 +463,10 @@
                             <h5 class="card-title fs-4">Brownies Coklat</h5>
                             <hr class="w-75">
                             <h5 class="card-title fs-4">Rp. 150.000 / BOX</h5>
+                            <hr class="w-75">
+                            <h5 class="card-title fs-4">Stok :
+                                <span class="stok text-capitalize">tersedia</span>
+                            </h5>
                             <hr class="w-75">
                             <a href="#" class="btn border border-0">TAMBAH KE KERANJANG</a>
                         </div>
@@ -456,25 +483,33 @@
                             <hr class="w-75">
                             <h5 class="card-title fs-4">Rp. 100.000 / BOX</h5>
                             <hr class="w-75">
+                            <h5 class="card-title fs-4">Stok :
+                                <span class="stok text-capitalize">tersedia</span>
+                            </h5>
+                            <hr class="w-75">
                             <a href="#" class="btn border border-0">TAMBAH KE KERANJANG</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4">
                     <div class="card">
-                        <img src="{{ asset('images/serabiTampah.jpg') }}" class="card-img-top">
+                        <img src="{{ asset('images/nasiTumpeng.jpg') }}" class="card-img-top">
                         <div class="card-body py-4">
                             <h5 class="fs-4"> <span class="merk-depan">Resya</span> <span
                                     class="merk-belakang">Brownies</span> </h5>
                             <hr class="w-75">
-                            <h5 class="card-title fs-4">Serabi Tampah</h5>
+                            <h5 class="card-title fs-4">Nasi Tumpeng</h5>
                             <hr class="w-75">
                             <h5 class="card-title fs-4">Rp. 200.000 / BOX</h5>
+                            <hr class="w-75">
+                            <h5 class="card-title fs-4">Stok :
+                                <span class="stok text-capitalize">tersedia</span>
+                            </h5>
                             <hr class="w-75">
                             <a href="#" class="btn border border-0">TAMBAH KE KERANJANG</a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="text-center">
                 <a href="{{ route('product') }}" class="btn border border-0 other">Lihat Produk Lain</a>

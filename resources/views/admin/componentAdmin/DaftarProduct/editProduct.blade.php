@@ -182,3 +182,15 @@
         </div>
     </div>
 @endsection
+
+@section('sweetAlert')
+    @if ($errors->any())
+        <script>
+            Swal.fire({
+                icon: "error",
+                title: "Validasi Gagal!",
+                html: `{!! implode('<hr>', $errors->all()) !!}`
+            });
+        </script>
+    @endif
+@endsection

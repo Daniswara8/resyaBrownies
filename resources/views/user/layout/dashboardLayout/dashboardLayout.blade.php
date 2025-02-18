@@ -2,249 +2,321 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard User</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('adminLte/plugins/fontawesome-free/css/all.min.css') }}">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet"
-        href="{{ asset('adminLte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="{{ asset('adminLte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <!-- JQVMap -->
-    <link rel="stylesheet" href="{{ asset('adminLte/jqvmap/jqvmap.min.css') }}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('adminLte/dist/css/adminlte.min.css') }}">
-    <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="{{ asset('adminLte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="{{ asset('adminLte/plugins/daterangepicker/daterangepicker.css') }}">
-    <!-- summernote -->
-    <link rel="stylesheet" href="{{ asset('adminLte/plugins/summernote/summernote-bs4.min.css') }}">
+    <title>
+        @yield('title')
+    </title>
 
-    {{-- Bootstrap Icons --}}
+    {{-- Bootstrap Cdn Css --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    {{-- Datatables Cdn --}}
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
-
     <style>
-        .nav-item p.sidebar-link {
-            margin-left: 10px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+        @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+        ::after,
+        ::before {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        .nav-item p.sidebar-link.info-account {
-            margin-left: 12px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+        a {
+            text-decoration: none;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        h1 {
+            font-weight: 600;
+            font-size: 1.5rem;
         }
 
         body {
-            overflow-x: hidden !important;
+            font-family: "Poppins", sans-serif;
+            color: white;
+        }
+
+        .wrapper {
+            display: flex;
+        }
+
+        .main {
+            min-height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            transition: all 0.35s ease-in-out;
+            background-color: #fafbfe;
+            background-color: rgb(158, 83, 30)
+        }
+
+        #sidebar {
+            width: 80px;
+            min-width: 80px;
+            z-index: 1000;
+            transition: all 0.25s ease-in-out;
+            background-color: rgb(57, 29, 9);
+            display: flex;
+            flex-direction: column;
+        }
+
+        #sidebar.expand {
+            width: 260px;
+            min-width: 260px;
+        }
+
+        .toggle-wrapper {
+            background-color: rgb(137, 70, 22);
+            padding: 10px 0;
+        }
+
+        .toggle-btn {
+            background-color: transparent;
+            cursor: pointer;
+            border: 0;
+        }
+
+        .toggle-btn i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .toggle-btn i:hover {
+            font-size: 2rem;
+            font-weight: bold !important;
+        }
+
+        a.logout-btn {
+            background-color: transparent;
+            cursor: pointer;
+            border: 0;
+        }
+
+        a.logout-btn i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        a.logout-btn span {
+            color: white;
+        }
+
+        /* #sidebar:not(.expand) .sidebar-logo, */
+        #sidebar:not(.expand) a.sidebar-link span,
+        #sidebar:not(.expand) .logo-sidebar h3 {
+            display: none;
+        }
+
+        #sidebar .logo-sidebar {
+            padding: 0.625rem 0.75rem;
+        }
+
+        #sidebar img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .sidebar-nav {
+            padding: 4.5rem 0;
+            flex: 1 1 auto;
+        }
+
+        a.sidebar-link {
+            padding: 1rem 1.625rem;
+            color: #fff;
+            display: block;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-link i {
+            font-size: 1.1rem;
+            margin-right: 0.75rem;
+        }
+
+        a.sidebar-link:hover {
+            background-color: rgba(255, 255, 255, 0.075);
+            border-left: 3px solid #3b7ddd;
+        }
+
+        a.sidebar-link.active {
+            background-color: blue;
+        }
+
+        .sidebar-item {
+            position: relative;
+        }
+
+        #sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
+            position: absolute;
+            top: 0;
+            left: 70px;
+            background-color: #0e2238;
+            padding: 0;
+            min-width: 15rem;
+            display: none;
+        }
+
+        #sidebar:not(.expand) .sidebar-item:hover .has-dropdown+.sidebar-dropdown {
+            display: block;
+            max-height: 15em;
+            width: 100%;
+            opacity: 1;
+        }
+
+        #sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
+            border: solid;
+            border-width: 0 0.075rem 0.075rem 0;
+            content: "";
+            display: inline-block;
+            padding: 2px;
+            position: absolute;
+            right: 1.5rem;
+            top: 1.4rem;
+            transform: rotate(-135deg);
+            transition: all 0.2s ease-out;
+        }
+
+        #sidebar.expand .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+            transform: rotate(45deg);
+            transition: all 0.2s ease-out;
+        }
+
+
+        /* Sidebar Hilang pada resolusi <=768px */
+        @media (max-width: 768px) {
+            #sidebar {
+                position: fixed;
+                left: -80px;
+                height: 100vh;
+            }
+
+            #sidebar.expand {
+                left: 0;
+            }
+
+            a.logout-btn span.logout-text {
+                display: none;
+            }
+
+            .wrapper {
+                position: relative;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+            }
         }
     </style>
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body>
     <div class="wrapper">
-
-        <!-- Preloader -->
-        {{-- <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="{{ asset('adminLte/dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo"
-                height="60" width="60">
-        </div> --}}
-
-        <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
-                            class="fas fa-bars"></i></a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
-                </li>
-            </ul>
-
-            <!-- Right navbar links -->
-            <ul class="navbar-nav ml-auto">
-                <!-- Navbar Search -->
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                        <i class="fas fa-search"></i>
+        <aside id="sidebar">
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a class="sidebar-link {{ Request::routeIs('profile.show') ? 'active' : '' }}"
+                        href="{{ route('profile.show') }}">
+                        <i class="bi bi-person-fill"></i>
+                        <span>Informasi Pribadi</span>
                     </a>
-                    <div class="navbar-search-block">
-                        <form class="form-inline">
-                            <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                                    aria-label="Search">
-                                <div class="input-group-append">
-                                    <button class="btn btn-navbar" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="#">
+                        <i class="bi bi-cart-fill"></i>
+                        <span>Daftar Pembelian</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{{ route('home') }}" class="sidebar-link">
+                        <i class="bi bi-arrow-return-left"></i>
+                        <span>Kembali Ke Home</span>
+                    </a>
                 </li>
             </ul>
-        </nav>
-        <!-- /.navbar -->
-
-        <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
-                <img src="{{ asset('adminLte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
-                    class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
-            </a>
-
-            <!-- Sidebar -->
-            <div class="sidebar">
-
-                <!-- SidebarSearch Form -->
-                <div class="form-inline mt-4">
-                    <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                            aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-sidebar">
-                                <i class="fas fa-search fa-fw"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sidebar Menu -->
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::routeIs('dashboardUser.index') ? 'active' : '' }}"
-                                href="{{ route('dashboardUser.index') }}">
-                                <i class="fas fa-user">
-                                    <p class="sidebar-link info-account">Informasi Akun</p>
-                                </i>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::routeIs('dashboardUser.pemesanan') ? 'active' : '' }}"
-                                href="{{ route('dashboardUser.pemesanan') }}">
-                                <i class="fas fa-clock">
-                                    <p class="sidebar-link">History Pemesanan</p>
-                                </i>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{ route('home') }}" class="nav-link">
-                                <i class="fas fa-arrow-left">
-                                    <p class="sidebar-link">Kembali Ke Home</p>
-                                </i>
-                            </a>
-                        </li>
-
-                    </ul>
-                </nav>
-                
-                <!-- /.sidebar-menu -->
-            </div>
-            <!-- /.sidebar -->
         </aside>
+        <div class="main pb-3">
 
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <div class="content-header">
-                <div class="container-fluid">
-                    {{-- <h1 class="text-center mt-5">Dashboard</h1> --}}
-                    @yield('pageTitle')
-                </div>
+            {{-- Navbar Wrapper --}}
+            <div class="d-flex justify-content-between toggle-wrapper px-3">
+                <button class="toggle-btn" type="button">
+                    <i class="bi bi-list"></i>
+                </button>
+                <a href="#" class="logout-btn d-flex column-gap-2" type="button" id="logoutBtn">
+                    <span class="logout-text my-auto fs-5">Logout</span>
+                    <i class="bi bi-box-arrow-right my-auto"></i>
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
-            <!-- /.content-header -->
+            {{-- End Navbar Wrapper --}}
 
-            <!-- Main content -->
-            <section class="content">
+            {{-- Main Content --}}
+            <div class="mt-5 body-content">
                 @yield('content')
-            </section>
-            <!-- /.content -->
+            </div>
         </div>
-
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-        </aside>
-        <!-- /.control-sidebar -->
     </div>
-    <!-- ./wrapper -->
 
-    <!-- jQuery -->
-    <script src="{{ asset('adminLte/plugins/jquery/jquery.min.js') }}"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="{{ asset('adminLte/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <script>
-        $.widget.bridge('uibutton', $.ui.button)
+    {{-- Bootstrap Cdn Js --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
     </script>
-    <!-- Bootstrap 4 -->
-    <script src="{{ asset('adminLte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- ChartJS -->
-    <script src="{{ asset('adminLte/plugins/chart.js/Chart.min.js') }}"></script>
-    <!-- Sparkline -->
-    <script src="{{ asset('adminLte/plugins/sparklines/sparkline.js') }}"></script>
-    <!-- JQVMap -->
-    <script src="{{ asset('adminLte/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
-    <script src="{{ asset('adminLte/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
-    <!-- jQuery Knob Chart -->
-    <script src="{{ asset('adminLte/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
-    <!-- daterangepicker -->
-    <script src="{{ asset('adminLte/plugins/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('adminLte/plugins/daterangepicker/daterangepicker.js') }}"></script>
-    <!-- Tempusdominus Bootstrap 4 -->
-    <script src="{{ asset('adminLte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
-    <!-- Summernote -->
-    <script src="{{ asset('adminLte/plugins/summernote/summernote-bs4.min.js') }}"></script>
-    <!-- overlayScrollbars -->
-    <script src="{{ asset('adminLte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-    <!-- AdminLTE App -->
-    <script src="{{ asset('adminLte/dist/js/adminlte.js') }}"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="{{ asset('adminLte/dist/js/demo.js') }}"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="{{ asset('adminLte/dist/js/pages/dashboard.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
+    </script>
 
-    {{-- Jquery Datatables --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    {{-- SweetAlert Cdn Js --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    {{-- Datatbles initialization --}}
+    @yield('sweetAlert')
+
     <script>
-        $(document).ready(function() {
-            $('#myTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json"
-                },
-                "paging": true,
-                "ordering": true,
-                "searching": true,
-                "pageLength": 5,
-                "responsive": true
+        const sidebar = document.querySelector("#sidebar");
+        const hamBurger = document.querySelector(".toggle-btn");
+
+        hamBurger.addEventListener("click", function(e) {
+            e.stopPropagation();
+            sidebar.classList.toggle("expand");
+        });
+
+        document.addEventListener("click", function(e) {
+            if (window.innerWidth <= 768) {
+                if (!sidebar.contains(e.target)) {
+                    sidebar.classList.remove("expand");
+                }
+            }
+        });
+
+        sidebar.addEventListener("click", function(e) {
+            e.stopPropagation();
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: "Anda yakin ingin logout?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Ya, logout",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('logout-form').submit();
+                }
             });
         });
     </script>

@@ -235,15 +235,15 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link {{ Request::routeIs('dashboardAdmin.listUser') ? 'active' : '' }}"
-                        href="{{ route('dashboardAdmin.listUser') }}">
+                    <a class="sidebar-link {{ Request::routeIs('admin.listUser') ? 'active' : '' }}"
+                        href="{{ route('admin.listUser') }}">
                         <i class="bi bi-person-circle"></i>
                         <span>Daftar User</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link {{ Request::routeIs('admin.listProduct') ? 'active' : '' }}"
-                         href="{{ route('admin.listProduct') }}">
+                        href="{{ route('admin.listProduct') }}">
                         <i class="bi bi-box-fill"></i>
                         <span>Daftar Barang</span>
                     </a>
@@ -294,7 +294,7 @@
             {{-- End Navbar Wrapper --}}
 
             {{-- Main Content --}}
-            <div class="mt-5 px-2 body-content">
+            <div class="mt-5 body-content">
                 @yield('content')
             </div>
         </div>

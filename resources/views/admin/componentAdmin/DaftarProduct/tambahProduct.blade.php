@@ -58,14 +58,14 @@
             border-radius: 10px;
             color: white !important;
             background-color: rgb(191, 94, 24) !important;
-            width: 300px !important;
+            width: 100%;
         }
 
         .container-fluid form button.btn-reset {
             border-radius: 10px;
             color: white !important;
             background-color: red !important;
-            width: 300px;
+            width: 100%;
         }
 
         .price-input::-webkit-inner-spin-button,

@@ -169,8 +169,7 @@
                         <a href="{{ route('cart') }}" class="nav-link"><i class="bi bi-cart-fill"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('dashboardUser.index') }}" class="nav-link"><i
-                                class="bi bi-person-circle"></i></a>
+                        <a href="{{ route('profile.show') }}" class="nav-link"><i class="bi bi-person-circle"></i></a>
                     </li>
                 @else
                     <li class="nav-item">

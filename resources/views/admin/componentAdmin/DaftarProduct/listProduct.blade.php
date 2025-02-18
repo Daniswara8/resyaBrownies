@@ -42,11 +42,11 @@
             height: 100px;
         }
 
-        .container-fluid table.display th,
-        .container-fluid table.display td {
-            text-align: center;
-            vertical-align: middle;
-        }
+            .container-fluid table.display th,
+            .container-fluid table.display td {
+                text-align: center;
+                vertical-align: middle;
+            }
 
         .container-fluid table.display {
             background-color: white;
@@ -93,12 +93,13 @@
                                             <a href="{{ route('admin.productEdit.show', $product->id) }}">
                                                 <i class="bi bi-pencil-fill bg-warning btn-edit"></i>
                                             </a>
-                                            <form action="{{ route('admin.product.delete', $product->id) }}" method="POST"
+                                            <form id="deleteForm-{{ $product->id }}"
+                                                action="{{ route('admin.product.delete', $product->id) }}" method="POST"
                                                 class="d-inline p-0">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger p-2"
-                                                    onclick="return confirm('Yakin ingin menghapus produk ini?')">
+                                                <button type="button" class="btn btn-danger p-2"
+                                                    onclick="confirmDelete({{ $product->id }})">
                                                     <i class="bi bi-trash-fill"></i>
                                                 </button>
                                             </form>
@@ -123,4 +124,34 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('sweetAlert')
+    <script>
+        function confirmDelete(productId) {
+            Swal.fire({
+                title: "Apakah yakin ingin menghapus produk ini?",
+                text: "Tindakan ini tidak bisa dibatalkan!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Ya, hapus!",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById(`deleteForm-${productId}`).submit();
+                }
+            });
+        }
+
+        @if (session('success'))
+            Swal.fire({
+                title: "Berhasil!",
+                text: "{{ session('success') }}",
+                icon: "success",
+                confirmButtonText: "OK"
+            });
+        @endif
+    </script>
 @endsection

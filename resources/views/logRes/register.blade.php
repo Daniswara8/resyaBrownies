@@ -158,6 +158,9 @@
                             </span>
                             <input type="password" name="password" class="form-control" id="inputPassword"
                                 placeholder="Masukkan Password" data-placeholder="Masukkan Password">
+                            <span class="input-group-text" id="togglePassword">
+                                <i class="bi bi-eye-fill"></i>
+                            </span>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -252,6 +255,21 @@
                     this.classList.remove("is-invalid");
                     this.placeholder = this.dataset.placeholder;
                 });
+            });
+
+            // Toggle mata di password
+            togglePassword.addEventListener("click", function() {
+                let icon = this.querySelector("i");
+
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    icon.classList.remove("bi-eye-fill");
+                    icon.classList.add("bi-eye-slash-fill");
+                } else {
+                    passwordInput.type = "password";
+                    icon.classList.remove("bi-eye-slash-fill");
+                    icon.classList.add("bi-eye-fill");
+                }
             });
         });
     </script>

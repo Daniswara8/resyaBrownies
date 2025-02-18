@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    // Admin Page
     public function productIndex()
     {
         $products = Product::all();
@@ -82,5 +83,12 @@ class ProductController extends Controller
         Storage::disk('public')->delete($product->foto_product);
         $product->delete();
         return redirect()->route('admin.listProduct')->with('success', 'Produk berhasil dihapus.');
+    }
+
+    // User Page
+    public function productPage()
+    {
+        $products = Product::all();
+        return view('user.productPage.productUser', compact('products'));
     }
 }
