@@ -15,6 +15,9 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+    {{-- link icon --}}
+    <link rel="icon" href="{{ asset('imagesCompressed/logo69.png') }}" type="image/x-icon">
+
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
         @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");

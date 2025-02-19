@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -8,9 +8,13 @@
     <title>
         @yield('title')
     </title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    {{-- link icon --}}
+    <link rel="icon" href="{{ asset('imagesCompressed/logo69.png') }}" type="image/x-icon">
 
     {{-- Datatables Cdn Css --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.css">
@@ -256,16 +260,17 @@
                     </a>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="#">Menunggu Konfirmasi</a>
+                            <a class="sidebar-link {{ Request::routeIs('dashboardAdmin.konfirmasi') ? 'active' : '' }}"
+                                href="{{ route('dashboardAdmin.konfirmasi') }}">Pending</a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="#">Sedang Dibuat</a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="#">Siap DIambilt</a>
+                            <a class="sidebar-link" href="#">Siap DIambil</a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="#">Sudah DIambilt</a>
+                            <a class="sidebar-link" href="#">Sudah DIambil</a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="#">Dibatalkan</a>
@@ -286,10 +291,13 @@
                 <button class="toggle-btn" type="button">
                     <i class="bi bi-list"></i>
                 </button>
-                <a href="#" class="logout-btn d-flex column-gap-2" type="button">
+                <a href="#" class="logout-btn d-flex column-gap-2" type="button" id="logoutBtn">
                     <span class="logout-text my-auto fs-5">Logout</span>
                     <i class="bi bi-box-arrow-right my-auto"></i>
                 </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
             {{-- End Navbar Wrapper --}}
 
@@ -337,6 +345,23 @@
 
         sidebar.addEventListener("click", function(e) {
             e.stopPropagation();
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: "Anda yakin ingin logout?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Ya, logout",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('logout-form').submit();
+                }
+            });
         });
     </script>
 </body>

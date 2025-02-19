@@ -42,14 +42,15 @@
             height: 100px;
         }
 
-            .container-fluid table.display th,
-            .container-fluid table.display td {
-                text-align: center;
-                vertical-align: middle;
-            }
+        .container-fluid table.display th,
+        .container-fluid table.display td {
+            text-align: center;
+            vertical-align: middle;
+            color: white;
+        }
 
         .container-fluid table.display {
-            background-color: white;
+            background-color: rgb(57, 29, 9);
         }
     </style>
 
@@ -83,7 +84,11 @@
                                     <td>{{ $product->nama_product }}</td>
                                     <td>Rp {{ number_format($product->harga_product, 0, ',', '.') }}</td>
                                     <td>{{ ucfirst($product->kategori_product) }}</td>
-                                    <td>{{ ucfirst($product->stok) }}</td>
+                                    <td>
+
+                                        {{-- Agar mengubah penulisan menjadi ada spasi --}}
+                                        {{ $product->stok === 'tidakTersedia' ? 'Tidak Tersedia' : 'Tersedia' }}
+                                    </td>
                                     <td>
                                         <img src="{{ asset('storage/' . $product->foto_product) }}" alt=""
                                             class="object-fit-cover">

@@ -168,7 +168,6 @@
     <section class="menu">
 
         <h3 class="fs-1 text-white text-center">DAFTAR MENU</h3>
-
         <div class="container">
 
             <div class="button-category">
@@ -195,8 +194,10 @@
                             <div class="card">
                                 <img src="{{ asset('storage/' . $product->foto_product) }}" class="card-img-top">
                                 <div class="card-body py-4">
-                                    <h5 class="fs-4"> <span class="merk-depan">Resya</span> <span
-                                            class="merk-belakang">Brownies</span> </h5>
+                                    <h5 class="fs-4">
+                                        <span class="merk-depan">Resya</span>
+                                        <span class="merk-belakang">Brownies</span>
+                                    </h5>
                                     <hr class="w-75">
                                     <h5 class="card-title fs-4">{{ $product->nama_product }}</h5>
                                     <hr class="w-75">
@@ -204,10 +205,28 @@
                                         / BOX</h5>
                                     <hr class="w-75">
                                     <h5 class="card-title fs-4">Stok :
-                                        <span class="stok-{{ $product->stok }}">{{ $product->stok }}</span>
+                                        <span class="text-capitalize stok-{{ $product->stok }}">
+
+                                            {{-- Agar mengubah penulisan menjadi ada spasi --}}
+                                            {{ $product->stok === 'tidakTersedia' ? 'Tidak Tersedia' : 'Tersedia' }}
+                                        </span>
                                     </h5>
                                     <hr class="w-75">
-                                    <a href="#" class="btn border border-0">TAMBAH KE KERANJANG</a>
+                                    @if (Auth::check())
+                                        <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn border border-0"
+                                                @if ($product->stok == 'tidakTersedia') disabled @endif>
+                                                TAMBAH KE KERANJANG
+                                            </button>
+                                        </form>
+                                    @else
+                                        <a href="{{ route('login.index') }}"
+                                            class="btn border border-0 
+                                            @if ($product->stok == 'tidakTersedia') disabled @endif">
+                                            TAMBAH KE KERANJANG
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

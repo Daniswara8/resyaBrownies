@@ -113,6 +113,10 @@
             margin: 1rem auto;
         }
 
+        .menu .row span.stok-tidakTersedia {
+            text-decoration: line-through;
+        }
+
         .menu .row .btn {
             background-color: chocolate !important;
             color: white;
@@ -444,72 +448,30 @@
                                     / BOX</h5>
                                 <hr class="w-75">
                                 <h5 class="card-title fs-4">Stok :
-                                    <span class="stok text-capitalize">{{ $product->stok }}</span>
+                                    <span class="text-capitalize stok-{{ $product->stok }} ">
+                                        {{ $product->stok === 'tidakTersedia' ? 'Tidak Tersedia' : 'Tersedia' }}
+                                    </span>
                                 </h5>
                                 <hr class="w-75">
-                                <a href="#" class="btn border border-0">TAMBAH KE KERANJANG</a>
+                                @if (Auth::check())
+                                    <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn border border-0"
+                                            @if ($product->stok == 'tidakTersedia') disabled @endif>
+                                            TAMBAH KE KERANJANG
+                                        </button>
+                                    </form>
+                                @else
+                                    <a href="{{ route('login.index') }}"
+                                        class="btn border border-0 
+                                            @if ($product->stok == 'tidakTersedia') disabled @endif">
+                                        TAMBAH KE KERANJANG
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </div>
                 @endforeach
-
-                {{-- <div class="col-md-6 col-lg-4">
-                    <div class="card">
-                        <img src="{{ asset('images/brownies.jpg') }}" class="card-img-top">
-                        <div class="card-body py-4">
-                            <h5 class="fs-4"> <span class="merk-depan">Resya</span> <span
-                                    class="merk-belakang">Brownies</span> </h5>
-                            <hr class="w-75">
-                            <h5 class="card-title fs-4">Brownies Coklat</h5>
-                            <hr class="w-75">
-                            <h5 class="card-title fs-4">Rp. 150.000 / BOX</h5>
-                            <hr class="w-75">
-                            <h5 class="card-title fs-4">Stok :
-                                <span class="stok text-capitalize">tersedia</span>
-                            </h5>
-                            <hr class="w-75">
-                            <a href="#" class="btn border border-0">TAMBAH KE KERANJANG</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="card">
-                        <img src="{{ asset('images/boluGulung.jpg') }}" class="card-img-top">
-                        <div class="card-body py-4">
-                            <h5 class="fs-4"> <span class="merk-depan">Resya</span> <span
-                                    class="merk-belakang">Brownies</span> </h5>
-                            <hr class="w-75">
-                            <h5 class="card-title fs-4">Bolu Gulung</h5>
-                            <hr class="w-75">
-                            <h5 class="card-title fs-4">Rp. 100.000 / BOX</h5>
-                            <hr class="w-75">
-                            <h5 class="card-title fs-4">Stok :
-                                <span class="stok text-capitalize">tersedia</span>
-                            </h5>
-                            <hr class="w-75">
-                            <a href="#" class="btn border border-0">TAMBAH KE KERANJANG</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="card">
-                        <img src="{{ asset('images/nasiTumpeng.jpg') }}" class="card-img-top">
-                        <div class="card-body py-4">
-                            <h5 class="fs-4"> <span class="merk-depan">Resya</span> <span
-                                    class="merk-belakang">Brownies</span> </h5>
-                            <hr class="w-75">
-                            <h5 class="card-title fs-4">Nasi Tumpeng</h5>
-                            <hr class="w-75">
-                            <h5 class="card-title fs-4">Rp. 200.000 / BOX</h5>
-                            <hr class="w-75">
-                            <h5 class="card-title fs-4">Stok :
-                                <span class="stok text-capitalize">tersedia</span>
-                            </h5>
-                            <hr class="w-75">
-                            <a href="#" class="btn border border-0">TAMBAH KE KERANJANG</a>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
             <div class="text-center">
                 <a href="{{ route('product') }}" class="btn border border-0 other">Lihat Produk Lain</a>

@@ -66,27 +66,7 @@ class UserController extends Controller
         return redirect()->back()->withInput()->with('error', 'Email atau password tidak valid');
     }
 
-    // Method untuk membuat admin jika belum ada
-    public static function createAdmin()
-    {
-        // Email dan password Admin
-        $adminEmail = 'admin@example.com';
-        $adminPassword = 'admin123';
-
-        if (!User::where('email', $adminEmail)->exists()) {
-            User::create([
-                'nama' => 'Admin',
-                'no_telepon' => '081234567890',
-                'email' => $adminEmail,
-                'password' => Hash::make($adminPassword),
-                'alamat' => 'Alamat Admin',
-                'role' => 'admin'
-            ]);
-        }
-    }
-
     // Untuk Halaman Admin
-
     public function listUserShow()
     {
         $users = User::all();
@@ -109,8 +89,9 @@ class UserController extends Controller
             'alamat' => 'required|string|max:1000'
         ]);
 
-        $user = Auth::user();
-        $user->update([
+        $userId = Auth::user()->id;
+        $userData = User::where('id', $userId)->first();
+        $userData->update([
             'nama' => $request->nama,
             'no_telepon' => $request->no_telepon,
             'email' => $request->email,
@@ -122,10 +103,11 @@ class UserController extends Controller
 
     public function profileDelete()
     {
-        $user = Auth::user();
+        $userId = Auth::user()->id;
+        $userData = User::where('id', $userId)->first();
         Auth::logout();
-        $user->delete();
-        return redirect()->route('logRes.login')->with('success', 'Akun berhasil dihapus.');
+        $userData->delete();
+        return redirect()->route('login.index')->with('success', 'Akun berhasil dihapus.');
     }
 
     public function logout(Request $request)
@@ -134,6 +116,6 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('logRes.login')->with('success', 'Anda telah logout.');
+        return redirect()->route('login.index')->with('success', 'Anda telah logout.');
     }
 }

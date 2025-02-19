@@ -4,10 +4,18 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 
 
 Route::get('/', [HomeController::class, 'showHome'])->name('home');
 Route::get('/product', [ProductController::class, 'productPage'])->name('product');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/cart', [CartController::class, 'cartShow'])->name('cart.show');
+    Route::post('/cart/{product}', [CartController::class, 'cartAdd'])->name('cart.add');
+    Route::post('/cart/update-quantity/{cart}', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
+    Route::delete('/cart/{cart}', [CartController::class, 'cartDelete'])->name('cart.delete');
+});
 
 Route::group(['controller' => UserController::class], function () {
     Route::get('/dashboardUser', 'profileShow')->name('profile.show')->middleware('auth');
@@ -15,10 +23,6 @@ Route::group(['controller' => UserController::class], function () {
     Route::post('/dashboardUser/delete', 'profileDelete')->name('profile.delete')->middleware('auth');
     Route::post('/logout', 'logout')->name('logout')->middleware('auth');
 });
-
-route::get('/cart', function () {
-    return view('user.cartPage.cartUser');
-})->name('cart');
 
 
 Route::middleware(['admin'])->group(function () {
@@ -36,6 +40,10 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/dashboardAdmin/listPenjualan', function () {
         return view('admin.componentAdmin.laporanPenjualan.listPenjualan');
     })->name('dashboardAdmin.listPenjualan');
+
+    Route::get('/dashboardAdmin/menungguKonfirmasi', function () {
+        return view('admin.componentAdmin.daftarOrder.menungguKonfirmasi');
+    })->name('dashboardAdmin.konfirmasi');
 });
 
 
@@ -45,4 +53,4 @@ Route::group(['controller' => UserController::class], function () {
     Route::post('/register', 'registerSubmit')->name('register.submit');
     Route::post('/login', 'loginSubmit')->name('login.submit');
 });
-UserController::createAdmin();
+// UserController::createAdmin();

@@ -15,6 +15,15 @@
             text-align: center;
             vertical-align: middle;
         }
+
+        .container-fluid table.display {
+            background-color: rgb(57, 29, 9);
+        }
+
+        table th,
+        table td {
+            color: white !important;
+        }
     </style>
 
     <div class="container-fluid">

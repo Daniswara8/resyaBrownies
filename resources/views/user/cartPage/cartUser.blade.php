@@ -14,7 +14,7 @@
 
         h1 {
             margin-top: 180px;
-            display: none;
+            /* display: none; */
         }
 
         .cart {
@@ -58,9 +58,13 @@
             border-radius: 10px;
         }
 
-        .cart .container .trash-column a:hover i {
+        .cart .container .trash-column button.btn:hover i {
             background-color: rgb(180, 6, 6);
             transition: all 0.3s;
+        }
+
+        .cart .container .trash-column button.btn {
+            border: none !important;
         }
 
         .cart .container.total {
@@ -147,76 +151,53 @@
         }
     </style>
 
-    <h1 class="text-white text-center">Keranjang Anda Kosong</h1>
+    <h1 class="text-white text-center">
+        {{ $cartItems->isEmpty() ? 'Keranjang Anda Kosong' : 'Keranjang Anda' }}
+    </h1>
     <section class="cart d-flex flex-column row-gap-5">
 
-        <div class="container row-wrapper">
-            <div class="row justify-content-lg-center justify-content-xl-around">
-                <div class="col-md-2 col-lg-3 col-xl-2 my-auto text-center">
-                    <img src="{{ asset('images/brownies.jpg') }}" alt="Brownies" class="object-fit-cover" height="150"
-                        width="150">
-                </div>
-                <div class="col-md-3 col-lg-3 my-auto product-column">
-                    <h3 class="text-white fs-4 text-center text-lg-start">Brownies Coklat</h3>
-                    <h3 class="text-white fs-5 text-center text-lg-start">Kategori : Snack & Cemilan</h3>
-                </div>
-                <div class="col-md-3 col-lg-3 d-flex align-items-center justify-content-center quantity-column">
-                    <button class="btn btn-minus px-3 py-2" onclick="changeQuantity(-1)">
-                        <i class="bi bi-dash-lg"></i>
-                    </button>
-
-                    <input min="1" name="quantity" value="1" type="number"
-                        class="quantity-input form-control text-center mx-2 border-0 shadow-sm"
-                        style="max-width: 70px; font-size: 1.2rem;">
-
-                    <button class="btn btn-plus px-3 py-2" onclick="changeQuantity(1)">
-                        <i class="bi bi-plus-lg"></i>
-                    </button>
-                </div>
-                <div class="col-md-3 col-lg-2 my-auto price-column">
-                    <h4 class="fs-4 text-white text-center text-lg-start text-xl-center">Rp. 100.000</h4>
-                </div>
-                <div class="col-md-1 col-lg-1 my-auto trash-column text-end text-lg-start text-xl-center">
-                    <a href="#">
-                        <i class="bi bi-trash3-fill"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="container row-wrapper">
-            <div class="row justify-content-lg-center justify-content-xl-around">
-                <div class="col-md-2 col-lg-3 col-xl-2 my-auto text-center">
-                    <img src="{{ asset('images/nasiTumpeng.jpg') }}" alt="Brownies" class="object-fit-cover" height="150"
-                        width="150">
-                </div>
-                <div class="col-md-3 col-lg-3 my-auto product-column">
-                    <h3 class="text-white fs-4 text-center text-lg-start">Nasi Tumpeng</h3>
-                    <h3 class="text-white fs-5 text-center text-lg-start">Kategori : Nasi & Lauk</h3>
-                </div>
-                <div class="col-md-3 col-lg-3 d-flex align-items-center justify-content-center quantity-column">
-                    <button class="btn btn-minus px-3 py-2" onclick="changeQuantity(-1)">
-                        <i class="bi bi-dash-lg"></i>
-                    </button>
-
-                    <input min="1" name="quantity" value="1" type="number"
-                        class="quantity-input form-control text-center mx-2 border-0 shadow-sm"
-                        style="max-width: 70px; font-size: 1.2rem;">
-
-                    <button class="btn btn-plus px-3 py-2" onclick="changeQuantity(1)">
-                        <i class="bi bi-plus-lg"></i>
-                    </button>
-                </div>
-                <div class="col-md-3 col-lg-2 my-auto price-column">
-                    <h4 class="fs-4 text-white text-center text-lg-start text-xl-center">Rp. 250.000</h4>
-                </div>
-                <div class="col-md-1 col-lg-1 my-auto trash-column text-end text-lg-start text-xl-center">
-                    <a href="#">
-                        <i class="bi bi-trash3-fill"></i>
-                    </a>
+        @foreach ($cartItems as $cart)
+            <div class="container row-wrapper">
+                <div class="row justify-content-lg-center justify-content-xl-around">
+                    <div class="col-md-2 col-lg-3 col-xl-2 my-auto text-center">
+                        <img src="{{ asset('storage/' . $cart->product->foto_product) }}"
+                            alt="{{ $cart->product->nama_product }}" class="object-fit-cover" height="150" width="150">
+                    </div>
+                    <div class="col-md-3 col-lg-3 my-auto product-column">
+                        <h3 class="text-white fs-4 text-center text-lg-start">{{ $cart->product->nama_product }}</h3>
+                        <h3 class="text-white fs-5 text-center text-lg-start">Kategori :
+                            {{ $cart->product->kategori_product }}</h3>
+                    </div>
+                    <div class="col-md-3 col-lg-3 d-flex align-items-center justify-content-center quantity-column">
+                        <form action="{{ route('cart.updateQuantity', $cart->id) }}" method="POST" class="d-flex ">
+                            @csrf
+                            <button class="btn btn-minus px-3 py-2" type="submit" name="quantity"
+                                value="{{ $cart->quantity - 1 }}">
+                                <i class="bi bi-dash-lg"></i>
+                            </button>
+                            <input min="1" name="quantity" value="{{ $cart->quantity }}" type="number"
+                                class="quantity-input form-control text-center mx-2 border-0 shadow-sm"
+                                style="max-width: 70px; font-size: 1.2rem;" readonly>
+                            <button class="btn btn-plus px-3 py-2" type="submit" name="quantity"
+                                value="{{ $cart->quantity + 1 }}">
+                                <i class="bi bi-plus-lg"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-3 col-lg-2 my-auto price-column">
+                        <h4 class="fs-4 text-white text-center text-lg-start text-xl-center">Rp.
+                            {{ number_format($cart->product->harga_product * $cart->quantity, 0, ',', '.') }}</h4>
+                    </div>
+                    <div class="col-md-1 col-lg-1 my-auto trash-column text-end text-lg-start text-xl-center">
+                        <form action="{{ route('cart.delete', $cart->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn text-white"><i class="bi bi-trash3-fill"></i></button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endforeach
 
         <div class="container total">
             <div class="row justify-content-between">
@@ -224,7 +205,9 @@
                     <h3 class="fs-4 fs-lg-1 text-white">Total Harga :</h3>
                 </div>
                 <div class="col-6 col-lg-2">
-                    <h3 class="fs-4 fs-lg-1 text-white text-end">Rp. 350.000</h3>
+                    <h3 class="fs-4 fs-lg-1 text-white text-end">
+                        Rp. {{ number_format($totalHarga, 0, ',', '.') }}
+                    </h3>
                 </div>
             </div>
 
@@ -274,9 +257,22 @@
         document.addEventListener("DOMContentLoaded", function() {
             let dateInput = document.getElementById("hariPemesanan");
             let today = new Date();
-            today.setDate(today.getDate() + 3); // Set minimal pemesanan H-3
-            let minDate = today.toISOString().split("T")[0]; // Format YYYY-MM-DD
+            today.setDate(today.getDate() + 3);
+            let minDate = today.toISOString().split("T")[0];
             dateInput.min = minDate;
         });
+    </script>
+@endsection
+
+@section('sweetAlert')
+    <script>
+        @if (session('success'))
+            Swal.fire({
+                title: "Berhasil!",
+                text: "{{ session('success') }}",
+                icon: "success",
+                confirmButtonText: "OK"
+            });
+        @endif
     </script>
 @endsection
