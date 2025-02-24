@@ -9,6 +9,7 @@
         @yield('title')
     </title>
 
+    {{-- Cdn Bootstrap Css --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -232,13 +233,6 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a class="sidebar-link {{ Request::routeIs('dashboardAdmin.listPenjualan') ? 'active' : '' }}"
-                        href="{{ route('dashboardAdmin.listPenjualan') }}">
-                        <i class="bi bi-cash-coin"></i>
-                        <span>Laporan Penjualan</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
                     <a class="sidebar-link {{ Request::routeIs('admin.listUser') ? 'active' : '' }}"
                         href="{{ route('admin.listUser') }}">
                         <i class="bi bi-person-circle"></i>
@@ -260,20 +254,23 @@
                     </a>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a class="sidebar-link {{ Request::routeIs('dashboardAdmin.konfirmasi') ? 'active' : '' }}"
-                                href="{{ route('dashboardAdmin.konfirmasi') }}">Pending</a>
+                            <a class="sidebar-link {{ Request::routeIs('admin.listOrderPending') ? 'active' : '' }}"
+                                href="{{ route('admin.listOrderPending') }}">Pending</a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="#">Sedang Dibuat</a>
+                            <a class="sidebar-link {{ Request::routeIs('admin.listKonfirmasi.show') ? 'active' : '' }}"
+                                href="{{ route('admin.listKonfirmasi.show') }}">Dikonfirmasi</a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="#">Siap DIambil</a>
+                            <a class="sidebar-link {{ Request::routeIs('admin.listSiapAmbil.show') ? 'active' : '' }}"
+                                href="{{ route('admin.listSiapAmbil.show') }}">Siap Diambil</a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="#">Sudah DIambil</a>
+                            <a class="sidebar-link {{ Request::routeIs('admin.listSelesai.show') ? 'active' : '' }}" href="{{ route('admin.listSelesai.show') }}">Selesai</a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="#">Dibatalkan</a>
+                            <a class="sidebar-link {{ Request::routeIs('admin.listBatal.show') ? 'active' : '' }}"
+                                href="{{ route('admin.listBatal.show') }}">Dibatalkan</a>
                         </li>
                     </ul>
                 </li>

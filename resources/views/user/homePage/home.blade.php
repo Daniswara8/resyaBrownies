@@ -332,12 +332,12 @@
     {{-- Banner --}}
     <section class="parallax">
         <div class="row justify-content-center mt-5 h-100">
-            <div class="col-md-5 my-auto">
+            <div class="col-md-5 my-auto" data-aos="fade-right" data-aos-duration="1000">
                 <div class="text-center">
                     <img src="{{ asset('imagesCompressed/logo69.png') }}" alt="">
                 </div>
             </div>
-            <div class="col-md-5 col-lg-6 my-md-auto text-center">
+            <div class="col-md-5 col-lg-6 my-md-auto text-center" data-aos="fade-left" data-aos-duration="1000">
                 <div class="jargon">
                     <h3 class="fs-2 text-white">
                         Sweet, Delicious, and Healthy
@@ -358,8 +358,8 @@
                 <img src="{{ asset('imagesCompressed/about.jpg') }}" alt="" height="400" width="450"
                     class="object-fit-cover aboutImg">
             </div>
-            <div class="col-10 col-lg-5 my-auto">
-                <p class="fs-5 mt-5 mt-lg-0" data-aos="fade-right" data-aos-duration="1000">Selamat datang di Resya
+            <div class="col-10 col-lg-5 my-auto" data-aos="fade-right" data-aos-duration="1000">
+                <p class="fs-5 mt-5 mt-lg-0">Selamat datang di Resya
                     Brownies,
                     tempat di
                     mana kelezatan dan kualitas menjadi
@@ -382,7 +382,7 @@
 
             <div class="container my-5">
                 <div class="row justify-content-center row-gap-5">
-                    <div class="col-md-8 col-xl-4">
+                    <div class="col-md-8 col-xl-4" data-aos="zoom-out" data-aos-duration="500">
                         <div class="card">
                             <div class="card-body text-center">
                                 <i class="bi bi-gem text-center"></i>
@@ -393,7 +393,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 col-xl-4">
+                    <div class="col-md-8 col-xl-4" data-aos="zoom-out" data-aos-duration="1000">
                         <div class="card">
                             <div class="card-body text-center">
                                 <i class="bi bi-box-seam"></i>
@@ -404,7 +404,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 col-xl-4">
+                    <div class="col-md-8 col-xl-4" data-aos="zoom-out" data-aos-duration="1500">
                         <div class="card">
                             <div class="card-body text-center">
                                 <i class="bi bi-hand-thumbs-up-fill"></i>
@@ -587,7 +587,7 @@
                 <div class="col-10 col-lg-8" data-aos="fade-right" data-aos-duration="1000">
                     <h4 class="fs-2">Ayo Diskusi Dengan Kami</h4>
                     <p class="fs-5 mt-3">
-                        Beli Brownies tinggal Chat di WhatsApp kami, atau kunjungi Instagram kami
+                        Kirim kritik dan saran anda melalui Whatsapp dengan klik tombol "Contact Us"
                     </p>
                 </div>
                 <div class="col-10 col-lg-3 col-xl-2 my-auto text-center" data-aos="fade-left" data-aos-duration="1000">

@@ -180,7 +180,8 @@
                     </div>
                     <div class="col-10 col-md-8 col-lg-3 col-xl-4 my-auto mx-auto mx-lg-0 ms-lg-auto">
                         <div class="search-bar d-flex position-relative">
-                            <input type="text" id="search" class="form-control" placeholder="Cari Disini">
+                            <input type="text" id="search" class="form-control" placeholder="Cari Disini"
+                                autocomplete="off">
                             <i class="bi bi-search position-absolute"></i>
                         </div>
                     </div>
@@ -188,7 +189,7 @@
             </div>
 
             <div class="card-wrapper">
-                <div class="row justify-content-center row-gap-5 mt-5">
+                <div class="row justify-content-center row-gap-5 mt-5" id="productList">
                     @foreach ($products as $product)
                         <div class="col-md-6 col-lg-4 {{ $product->kategori_product }}">
                             <div class="card">
@@ -239,37 +240,105 @@
     </section>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const snackBtn = document.querySelector(".btn-snack");
-            const nasiBtn = document.querySelector(".btn-nasi");
-            const allItems = document.querySelectorAll(".card-wrapper .col-md-6");
-
-            snackBtn.addEventListener("click", function(e) {
-                e.preventDefault();
-                setActiveButton(snackBtn);
-                filterItems("snackCemilan");
-            });
-
-            nasiBtn.addEventListener("click", function(e) {
-                e.preventDefault();
-                setActiveButton(nasiBtn);
-                filterItems("nasiLauk");
-            });
-
+        $(document).ready(function() {
             function filterItems(category) {
-                allItems.forEach(item => {
-                    if (item.classList.contains(category)) {
-                        item.style.display = "block";
+                $(".card-wrapper .col-md-6").each(function() {
+                    if ($(this).hasClass(category)) {
+                        $(this).show();
                     } else {
-                        item.style.display = "none";
+                        $(this).hide();
                     }
                 });
             }
 
             function setActiveButton(activeBtn) {
-                [snackBtn, nasiBtn].forEach(btn => btn.classList.remove("active"));
-                activeBtn.classList.add("active");
+                $(".btn-snack, .btn-nasi").removeClass("active");
+                activeBtn.addClass("active");
             }
+
+            $(document).on("click", ".btn-snack", function(e) {
+                e.preventDefault();
+                setActiveButton($(this));
+                filterItems("snackCemilan");
+            });
+
+            $(document).on("click", ".btn-nasi", function(e) {
+                e.preventDefault();
+                setActiveButton($(this));
+                filterItems("nasiLauk");
+            });
+
+            // Live Search AJAX
+            $('#search').on('keyup', function() {
+                let query = $(this).val();
+
+                $.ajax({
+                    url: "{{ route('search.product') }}",
+                    type: "GET",
+                    data: {
+                        query: query
+                    },
+                    success: function(data) {
+                        let productList = $('#productList');
+                        productList.empty();
+
+                        if (data.length > 0) {
+                            data.forEach(product => {
+                                let stokText = product.stok === 'tidakTersedia' ?
+                                    'Tidak Tersedia' : 'Tersedia';
+                                let stokClass = product.stok === 'tidakTersedia' ?
+                                    'disabled' : '';
+
+                                let authCheck =
+                                    @json(Auth::check());
+
+                                let cartButton = authCheck ? `
+                                <form action="cart/${product.id}" method="POST">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <button type="submit" class="btn border border-0 ${stokClass}" ${stokClass}>
+                                        TAMBAH KE KERANJANG
+                                    </button>
+                                </form>
+                            ` : `
+                                <a href="{{ route('login.index') }}" class="btn border border-0 ${stokClass}" ${stokClass}>
+                                    TAMBAH KE KERANJANG
+                                </a>
+                            `;
+
+                                let productCard = `
+                                <div class="col-md-6 col-lg-4 ${product.kategori_product}">
+                                    <div class="card">
+                                        <img src="/storage/${product.foto_product}" class="card-img-top">
+                                        <div class="card-body py-4">
+                                            <h5 class="fs-4">
+                                                <span class="merk-depan">Resya</span>
+                                                <span class="merk-belakang">Brownies</span>
+                                            </h5>
+                                            <hr class="w-75">
+                                            <h5 class="card-title fs-4">${product.nama_product}</h5>
+                                            <hr class="w-75">
+                                            <h5 class="card-title fs-4">Rp ${new Intl.NumberFormat('id-ID').format(product.harga_product)} / BOX</h5>
+                                            <hr class="w-75">
+                                            <h5 class="card-title fs-4">Stok :
+                                                <span class="text-capitalize stok-${product.stok}">
+                                                    ${stokText}
+                                                </span>
+                                            </h5>
+                                            <hr class="w-75">
+                                            ${cartButton}
+                                        </div>
+                                    </div>
+                                </div>`;
+
+                                productList.append(productCard);
+                            });
+                        } else {
+                            productList.append(
+                                '<p class="text-center">Produk tidak ditemukan</p>');
+                        }
+                    }
+                });
+            });
         });
     </script>
 @endsection

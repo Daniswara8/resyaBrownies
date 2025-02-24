@@ -91,4 +91,13 @@ class ProductController extends Controller
         $products = Product::all();
         return view('user.productPage.productUser', compact('products'));
     }
+
+    public function searchProduct(Request $request)
+    {
+        $query = $request->input('query');
+
+        $products = Product::where('nama_product', 'like', "%$query%")->get();
+
+        return response()->json($products);
+    }
 }

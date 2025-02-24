@@ -83,7 +83,10 @@
                                     <td class="text-center">{{ $index + 1 }}</td>
                                     <td>{{ $product->nama_product }}</td>
                                     <td>Rp {{ number_format($product->harga_product, 0, ',', '.') }}</td>
-                                    <td>{{ ucfirst($product->kategori_product) }}</td>
+                                    <td>
+                                        {{-- Agar mengubah penulisan menjadi ada spasi --}}
+                                        {{ $product->kategori_product === 'snackCemilan' ? 'Snack & Cemilan' : ($product->kategori_product === 'nasiLauk' ? 'Nasi & Lauk' : $cart->product->kategori_product) }}
+                                    </td>
                                     <td>
 
                                         {{-- Agar mengubah penulisan menjadi ada spasi --}}

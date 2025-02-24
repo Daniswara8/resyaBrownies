@@ -18,7 +18,7 @@
         }
 
         .cart {
-            margin: 200px 0 100px;
+            margin: 100px 0 100px;
         }
 
         .container.row-wrapper {
@@ -151,8 +151,10 @@
         }
     </style>
 
+    {{-- {{ dd(route('cart.checkout')) }} --}}
+
     <h1 class="text-white text-center">
-        {{ $cartItems->isEmpty() ? 'Keranjang Anda Kosong' : 'Keranjang Anda' }}
+        {{ $cartItems->isEmpty() ? 'KERANJANG ANDA KOSONG' : 'KERANJANG ANDA' }}
     </h1>
     <section class="cart d-flex flex-column row-gap-5">
 
@@ -165,8 +167,12 @@
                     </div>
                     <div class="col-md-3 col-lg-3 my-auto product-column">
                         <h3 class="text-white fs-4 text-center text-lg-start">{{ $cart->product->nama_product }}</h3>
-                        <h3 class="text-white fs-5 text-center text-lg-start">Kategori :
-                            {{ $cart->product->kategori_product }}</h3>
+                        <h3 class="text-white fs-5 text-center text-lg-start">
+                            Kategori :
+
+                            {{-- Agar mengubah penulisan menjadi ada spasi --}}
+                            {{ $cart->product->kategori_product === 'snackCemilan' ? 'Snack & Cemilan' : ($cart->product->kategori_product === 'nasiLauk' ? 'Nasi & Lauk' : $cart->product->kategori_product) }}
+                        </h3>
                     </div>
                     <div class="col-md-3 col-lg-3 d-flex align-items-center justify-content-center quantity-column">
                         <form action="{{ route('cart.updateQuantity', $cart->id) }}" method="POST" class="d-flex ">
@@ -177,7 +183,7 @@
                             </button>
                             <input min="1" name="quantity" value="{{ $cart->quantity }}" type="number"
                                 class="quantity-input form-control text-center mx-2 border-0 shadow-sm"
-                                style="max-width: 70px; font-size: 1.2rem;" readonly>
+                                style="max-width: 70px; font-size: 1.2rem;">
                             <button class="btn btn-plus px-3 py-2" type="submit" name="quantity"
                                 value="{{ $cart->quantity + 1 }}">
                                 <i class="bi bi-plus-lg"></i>
@@ -189,10 +195,13 @@
                             {{ number_format($cart->product->harga_product * $cart->quantity, 0, ',', '.') }}</h4>
                     </div>
                     <div class="col-md-1 col-lg-1 my-auto trash-column text-end text-lg-start text-xl-center">
-                        <form action="{{ route('cart.delete', $cart->id) }}" method="POST">
+                        <form id="deleteForm-{{ $cart->id }}" action="{{ route('cart.delete', $cart->id) }}"
+                            method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn text-white"><i class="bi bi-trash3-fill"></i></button>
+                            <button type="button" class="btn text-white" onclick="confirmDelete({{ $cart->id }})">
+                                <i class="bi bi-trash3-fill"></i>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -212,7 +221,6 @@
             </div>
 
             <hr class="w-100 text-white">
-
             <div class="row justify-content-between checkout">
                 <div class="col-lg-7">
                     <h3 class="fs-4 text-danger fw-bold">PERINGATAN : </h3>
@@ -222,10 +230,12 @@
                         whatsapp. Namun ketika pesanan sudah dikonfirmasi admin, maka pesanan tidak dapat dibatalkan!</p>
                 </div>
                 <div class="col-lg-4 col-xl-3 text-center text-lg-end">
-                    <form action="#" class="d-flex flex-column row-gap-3">
+                    <form action="{{ route('cart.checkout') }}" method="POST" class="d-flex flex-column row-gap-3">
+                        @csrf
+                        @method('POST')
                         <label for="hariPemesanan" class="text-white fs-4 fw-bold">Pesan Maksimal H-3</label>
-                        <input type="date" id="hariPemesanan" name="hariPemesanan">
-                        <a href="" class="btn btn-checkout">CHECKOUT</a>
+                        <input type="date" id="hariPemesanan" name="tanggal_diambil" required>
+                        <button type="submit" class="btn btn-checkout">CHECKOUT</button>
                     </form>
                 </div>
             </div>
@@ -239,6 +249,7 @@
             let newValue = parseInt(input.value) + amount;
             if (newValue >= 1) {
                 input.value = newValue;
+                input.dispatchEvent(new Event("change"));
             }
         }
 
@@ -255,17 +266,43 @@
         });
 
         document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll(".quantity-input").forEach(input => {
+                input.addEventListener("change", function() {
+                    let form = this.closest("form");
+                    form.submit();
+                });
+            });
+
             let dateInput = document.getElementById("hariPemesanan");
-            let today = new Date();
-            today.setDate(today.getDate() + 3);
-            let minDate = today.toISOString().split("T")[0];
-            dateInput.min = minDate;
+            if (dateInput) {
+                let today = new Date();
+                today.setDate(today.getDate() + 3);
+                let minDate = today.toISOString().split("T")[0];
+                dateInput.min = minDate;
+            }
         });
     </script>
 @endsection
 
 @section('sweetAlert')
     <script>
+        function confirmDelete(cartId) {
+            Swal.fire({
+                title: "Apakah yakin ingin menghapus produk ini?",
+                text: "Tindakan ini tidak bisa dibatalkan!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Ya, hapus!",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById(`deleteForm-${cartId}`).submit();
+                }
+            });
+        }
+
         @if (session('success'))
             Swal.fire({
                 title: "Berhasil!",

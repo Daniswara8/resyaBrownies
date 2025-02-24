@@ -17,6 +17,10 @@
 
     {{-- link icon --}}
     <link rel="icon" href="{{ asset('imagesCompressed/logo69.png') }}" type="image/x-icon">
+
+    {{-- Aos Cdn Css --}}
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playwrite+HU:wght@100..400&display=swap');
         @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
@@ -29,21 +33,28 @@
 
 <body>
 
-    @include('user.componentUserPartials.navbarUser')
-        @yield('content')
-    @include('user.componentUserPartials.footerUser')
-
-     {{-- SweetAlert cdn Js --}}
-     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-     @yield('sweetAlert')
-
     {{-- Bootstrap cdn Js --}}
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    @include('user.componentUserPartials.navbarUser')
+    @yield('content')
+    @include('user.componentUserPartials.footerUser')
+
+    {{-- SweetAlert cdn Js --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @yield('sweetAlert')
+
+    {{-- Aos Cdn Js --}}
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        AOS.init({
+            once: true
+        })
     </script>
 </body>
 
